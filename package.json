@@ -1,0 +1,27 @@
+{
+  "name": "@torlnapp/crypto-utils",
+  "version": "0.1.0",
+  "module": "./dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "bun run lint && bun test && tsdown",
+    "lint": "biome check --fix",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.8",
+    "@types/bun": "latest",
+    "tsdown": "^0.17.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5",
+    "@msgpack/msgpack": "^3",
+    "canonicalize": "^2"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  }
+}
