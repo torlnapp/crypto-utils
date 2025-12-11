@@ -16,7 +16,7 @@ export async function generateEd25519KeyPair(): Promise<webcrypto.CryptoKeyPair>
   throw new Error('Ed25519 Key pair generation failed');
 }
 
-export function generateAESGCMKey(): Promise<CryptoKey> {
+export function generateAESGCMKey(): Promise<webcrypto.CryptoKey> {
   return crypto.subtle.generateKey(
     {
       name: 'AES-GCM',
@@ -36,7 +36,7 @@ export function generateHKDFKey(
   ]);
 }
 
-export async function generateX25519KeyPair(): Promise<CryptoKeyPair> {
+export async function generateX25519KeyPair(): Promise<webcrypto.CryptoKeyPair> {
   const keypair = await crypto.subtle.generateKey(
     {
       name: 'X25519',
@@ -56,20 +56,24 @@ export function importKey(
   jwk: webcrypto.JsonWebKey,
   algorithm: webcrypto.Algorithm,
   usages: Array<webcrypto.KeyUsage>,
-): Promise<CryptoKey> {
+): Promise<webcrypto.CryptoKey> {
   return crypto.subtle.importKey('jwk', jwk, algorithm, true, usages);
 }
 
-export function importPsk(psk: Uint8Array<ArrayBuffer>): Promise<CryptoKey> {
+export function importPsk(
+  psk: Uint8Array<ArrayBuffer>,
+): Promise<webcrypto.CryptoKey> {
   return crypto.subtle.importKey('raw', psk, 'HKDF', false, ['deriveBits']);
 }
 
-export function exportKeyToJwk(key: CryptoKey): Promise<webcrypto.JsonWebKey> {
+export function exportKeyToJwk(
+  key: webcrypto.CryptoKey,
+): Promise<webcrypto.JsonWebKey> {
   return crypto.subtle.exportKey('jwk', key);
 }
 
 export async function exportKeyToRaw(
-  key: CryptoKey,
+  key: webcrypto.CryptoKey,
 ): Promise<Uint8Array<ArrayBuffer>> {
   const buffer = await crypto.subtle.exportKey('raw', key);
   return new Uint8Array(buffer);

@@ -2,7 +2,7 @@ import type { webcrypto } from 'node:crypto';
 
 export async function encrypt(
   algorithm: webcrypto.AlgorithmIdentifier,
-  key: CryptoKey,
+  key: webcrypto.CryptoKey,
   data: Uint8Array<ArrayBuffer> | string,
 ): Promise<Uint8Array<ArrayBuffer>> {
   const buffer = new Uint8Array(
