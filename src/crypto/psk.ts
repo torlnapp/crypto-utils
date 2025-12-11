@@ -12,11 +12,11 @@ export async function derivePskBytes(
   const hkdfBase = await generateHKDFKey(pskBytes);
   const infoBuffer = new TextEncoder().encode(info);
 
-  const saltHashBuffer = await crypto.subtle.digest(
+  const saltHashBuffer = await globalThis.crypto.subtle.digest(
     'SHA-256',
     new TextEncoder().encode(salt),
   );
-  const derivedBits = await crypto.subtle.deriveBits(
+  const derivedBits = await globalThis.crypto.subtle.deriveBits(
     {
       name: 'HKDF',
       hash: 'SHA-256',

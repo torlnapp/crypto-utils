@@ -1,7 +1,7 @@
 import type { webcrypto } from 'node:crypto';
 
 export async function generateEd25519KeyPair(): Promise<webcrypto.CryptoKeyPair> {
-  const result = await crypto.subtle.generateKey(
+  const result = await globalThis.crypto.subtle.generateKey(
     {
       name: 'Ed25519',
     },
@@ -17,7 +17,7 @@ export async function generateEd25519KeyPair(): Promise<webcrypto.CryptoKeyPair>
 }
 
 export function generateAESGCMKey(): Promise<webcrypto.CryptoKey> {
-  return crypto.subtle.generateKey(
+  return globalThis.crypto.subtle.generateKey(
     {
       name: 'AES-GCM',
       length: 256,
@@ -30,10 +30,13 @@ export function generateAESGCMKey(): Promise<webcrypto.CryptoKey> {
 export function generateHKDFKey(
   seed: Uint8Array<ArrayBuffer>,
 ): Promise<CryptoKey> {
-  return crypto.subtle.importKey('raw', seed, { name: 'HKDF' }, false, [
-    'deriveKey',
-    'deriveBits',
-  ]);
+  return globalThis.crypto.subtle.importKey(
+    'raw',
+    seed,
+    { name: 'HKDF' },
+    false,
+    ['deriveKey', 'deriveBits'],
+  );
 }
 
 export async function generateX25519KeyPair(): Promise<webcrypto.CryptoKeyPair> {
@@ -57,25 +60,33 @@ export function importKey(
   algorithm: webcrypto.Algorithm,
   usages: Array<webcrypto.KeyUsage>,
 ): Promise<webcrypto.CryptoKey> {
-  return crypto.subtle.importKey('jwk', jwk, algorithm, true, usages);
+  return globalThis.crypto.subtle.importKey(
+    'jwk',
+    jwk,
+    algorithm,
+    true,
+    usages,
+  );
 }
 
 export function importPsk(
   psk: Uint8Array<ArrayBuffer>,
 ): Promise<webcrypto.CryptoKey> {
-  return crypto.subtle.importKey('raw', psk, 'HKDF', false, ['deriveBits']);
+  return globalThis.crypto.subtle.importKey('raw', psk, 'HKDF', false, [
+    'deriveBits',
+  ]);
 }
 
 export function exportKeyToJwk(
   key: webcrypto.CryptoKey,
 ): Promise<webcrypto.JsonWebKey> {
-  return crypto.subtle.exportKey('jwk', key);
+  return globalThis.crypto.subtle.exportKey('jwk', key);
 }
 
 export async function exportKeyToRaw(
   key: webcrypto.CryptoKey,
 ): Promise<Uint8Array<ArrayBuffer>> {
-  const buffer = await crypto.subtle.exportKey('raw', key);
+  const buffer = await globalThis.crypto.subtle.exportKey('raw', key);
   return new Uint8Array(buffer);
 }
 

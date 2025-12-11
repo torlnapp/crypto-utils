@@ -8,11 +8,11 @@ export async function encrypt(
   const buffer = new Uint8Array(
     typeof data === 'string' ? new TextEncoder().encode(data) : data,
   );
-  const encrypted = await crypto.subtle.encrypt(
+  const encrypted = await globalThis.crypto.subtle.encrypt(
     algorithm === 'AES-GCM'
       ? {
           name: 'AES-GCM',
-          iv: crypto.getRandomValues(new Uint8Array(12)),
+          iv: globalThis.crypto.getRandomValues(new Uint8Array(12)),
         }
       : algorithm,
     key,

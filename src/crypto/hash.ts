@@ -4,7 +4,7 @@ export async function sha256(
   const buffer = new Uint8Array(
     typeof data === 'string' ? new TextEncoder().encode(data) : data,
   );
-  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+  const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', buffer);
   return new Uint8Array(hashBuffer);
 }
 
