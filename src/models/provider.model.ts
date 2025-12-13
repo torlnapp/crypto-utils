@@ -57,6 +57,7 @@ export interface AgreementProvider<
 
 export interface DerivationProvider<K extends HKDFKey> {
   generateKey: () => Promise<K>;
+  importKey: ImportKey<K>;
   deriveKey(
     key: K,
     salt: Binary | string,

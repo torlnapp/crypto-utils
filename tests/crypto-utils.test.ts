@@ -211,6 +211,24 @@ describe('algorithms', () => {
     expect(bits).toHaveLength(32);
   });
 
+  test('HKDF import raw key supports deriveKey/deriveBits', async () => {
+    const rawKey = new Uint8Array(Array.from({ length: 32 }, (_, i) => i));
+    const key = await HKDF.importKey(rawKey);
+
+    const salt = encodeUTF8('raw-salt');
+    const info = encodeUTF8('raw-info');
+
+    const aesKey = await HKDF.deriveKey(key, salt, info);
+    const plaintext = encodeUTF8('raw-import');
+    const cipher = await AES.encrypt(aesKey, plaintext);
+    const decrypted = await AES.decrypt(aesKey, cipher);
+
+    expect(decodeUtf8(decrypted)).toBe('raw-import');
+
+    const bits = await HKDF.deriveBits(key, salt, info);
+    expect(bits).toHaveLength(32);
+  });
+
   test('Ed25519 signatures verify and reject tampering', async () => {
     const { privateKey, publicKey } = await Ed25519.generateKeyPair();
     const message = encodeUTF8('signed data');

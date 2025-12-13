@@ -2,7 +2,7 @@ import type { DerivationProvider } from '../models/provider.model';
 import type { AESKey, HKDFKey } from '../types/key';
 import { generateNonce } from '../utils/crypto';
 import { encodeUTF8 } from '../utils/encode';
-import { asSymmetricKey } from '../utils/key';
+import { asSymmetricKey, importKey } from '../utils/key';
 
 export const HKDF: DerivationProvider<HKDFKey> = {
   async generateKey() {
@@ -16,6 +16,15 @@ export const HKDF: DerivationProvider<HKDFKey> = {
     );
 
     return asSymmetricKey<HKDFKey>(key);
+  },
+
+  importKey(keyData, extractable = false) {
+    return importKey<HKDFKey>(
+      keyData,
+      'HKDF',
+      ['deriveKey', 'deriveBits'],
+      extractable,
+    );
   },
 
   async deriveKey(key, salt, info, extractable = false) {
