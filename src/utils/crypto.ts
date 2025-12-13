@@ -3,7 +3,7 @@ import type { Algorithm } from '../types/key';
 
 export function generateNonce(): Binary {
   const nonce = new Uint8Array(12);
-  crypto.getRandomValues(nonce);
+  globalThis.crypto.getRandomValues(nonce);
 
   return nonce;
 }

@@ -1,12 +1,16 @@
 import { encode } from '@msgpack/msgpack';
 import type { Binary } from '../types/array';
 
-export async function encodeBase64(data: Binary): Promise<string> {
+export function encodeBase64(data: Binary): string {
+  if (!('btoa' in globalThis)) {
+    throw new Error('Base64 encoding is not supported in this environment.');
+  }
+
   const uint8Array = new Uint8Array(data);
   const binary = Array.from(uint8Array, (byte) =>
     String.fromCharCode(byte),
   ).join('');
-  return btoa(binary);
+  return globalThis.btoa(binary);
 }
 
 export function encodeMsgPack(data: unknown): Binary {

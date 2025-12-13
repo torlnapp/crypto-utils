@@ -7,7 +7,6 @@ import {
   exportKeyToRaw,
   importKey,
 } from '../utils/key';
-import { SHA256 } from './sha256';
 
 export const HKDF: DerivationProvider<HKDFKey> = {
   async generateKey(extractable = false) {
@@ -45,7 +44,7 @@ export const HKDF: DerivationProvider<HKDFKey> = {
       {
         name: 'HKDF',
         hash: 'SHA-256',
-        salt: typeof salt === 'string' ? await SHA256.hash(salt) : salt,
+        salt: typeof salt === 'string' ? encodeUTF8(salt) : salt,
         info: typeof info === 'string' ? encodeUTF8(info) : info,
       },
       key,
@@ -62,7 +61,7 @@ export const HKDF: DerivationProvider<HKDFKey> = {
       {
         name: 'HKDF',
         hash: 'SHA-256',
-        salt: typeof salt === 'string' ? await SHA256.hash(salt) : salt,
+        salt: typeof salt === 'string' ? encodeUTF8(salt) : salt,
         info: typeof info === 'string' ? encodeUTF8(info) : info,
       },
       key,

@@ -7,7 +7,6 @@ export * from './algorithms/x25519';
 export * from './types/key';
 
 export * from './utils/binary';
-export * from './utils/binary';
 export * from './utils/common';
 export * from './utils/crypto';
 export * from './utils/decode';
