@@ -24,6 +24,7 @@ import {
   SHA256,
   toArrayBuffer,
   toBinary,
+  toTightUint8Array,
   toTightUint8Arrays,
   X25519,
 } from '../src/index.ts';
@@ -104,11 +105,11 @@ describe('crypto helpers', () => {
     expect(ciphertext.length + tag.length).toBe(encrypted.length - 12);
   });
 
-  test('toTightUint8Arrays compacts sliced views', () => {
+  test('toTightUint8Array compacts sliced views', () => {
     const buffer = new Uint8Array([0, 1, 2, 3, 4, 5]).buffer;
     const view = new Uint8Array(buffer, 2, 3);
 
-    const compact = toTightUint8Arrays(view) as Uint8Array;
+    const compact = toTightUint8Array(view);
 
     expect(compact.byteOffset).toBe(0);
     expect(Array.from(compact)).toEqual([2, 3, 4]);

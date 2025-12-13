@@ -10,7 +10,8 @@ export function toArrayBuffer(buffer: ArrayBufferLike): ArrayBuffer {
 
 export function toBinary(data: unknown): Binary {
   if (data instanceof Uint8Array) {
-    return new Uint8Array(toArrayBuffer(data.buffer));
+    const tightArray = toTightUint8Array(data);
+    return new Uint8Array(toArrayBuffer(tightArray.buffer));
   } else if (data instanceof ArrayBuffer) {
     return new Uint8Array(data);
   } else {
@@ -47,9 +48,7 @@ export function toTightUint8Arrays(data: unknown) {
   return data;
 }
 
-function toTightUint8Array(
-  array: Uint8Array<ArrayBuffer>,
-): Uint8Array<ArrayBuffer> {
+export function toTightUint8Array(array: Uint8Array): Uint8Array {
   if (array.byteOffset === 0 && array.byteLength === array.buffer.byteLength) {
     return array;
   }
