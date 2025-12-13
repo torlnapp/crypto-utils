@@ -21,8 +21,12 @@ export const X25519: AgreementProvider<X25519PublicKey, X25519PrivateKey> = {
     return asKeyPair<X25519KeyPair>(keyPair);
   },
 
-  async importKey(keyData, extractable = true) {
-    return importKey<X25519PublicKey | X25519PrivateKey>(
+  importPublicKey(keyData, extractable = true) {
+    return importKey<X25519PublicKey>(keyData, 'X25519', [], extractable);
+  },
+
+  importPrivateKey(keyData, extractable = true) {
+    return importKey<X25519PrivateKey>(
       keyData,
       'X25519',
       ['deriveKey', 'deriveBits'],

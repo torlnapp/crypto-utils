@@ -35,7 +35,8 @@ export interface SignatureProvider<
   S extends Ed25519PrivateKey = Ed25519PrivateKey,
 > extends Extractable<P | S> {
   generateKeyPair: GenerateKey<KeyPair<P, S>>;
-  importKey: ImportKey<P | S>;
+  importPublicKey: ImportKey<P>;
+  importPrivateKey: ImportKey<S>;
   sign(data: Binary, privateKey: S): Promise<Binary>;
   verify(data: Binary, signature: Binary, publicKey: P): Promise<boolean>;
 }
@@ -49,7 +50,8 @@ export interface AgreementProvider<
   S extends X25519PrivateKey = X25519PrivateKey,
 > extends Extractable<P | S> {
   generateKeyPair: GenerateKey<KeyPair<P, S>>;
-  importKey: ImportKey<P | S>;
+  importPublicKey: ImportKey<P>;
+  importPrivateKey: ImportKey<S>;
   deriveSecret(privateKey: S, publicKey: P): Promise<Binary>;
 }
 

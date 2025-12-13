@@ -21,11 +21,20 @@ export const Ed25519: SignatureProvider<Ed25519PublicKey, Ed25519PrivateKey> = {
     return asKeyPair<Ed25519KeyPair>(keyPair);
   },
 
-  async importKey(keyData, extractable = true) {
-    return importKey<Ed25519PublicKey | Ed25519PrivateKey>(
+  importPublicKey(keyData, extractable = true) {
+    return importKey<Ed25519PublicKey>(
       keyData,
       'Ed25519',
-      ['sign', 'verify'],
+      ['verify'],
+      extractable,
+    );
+  },
+
+  importPrivateKey(keyData, extractable = true) {
+    return importKey<Ed25519PrivateKey>(
+      keyData,
+      'Ed25519',
+      ['sign'],
       extractable,
     );
   },
