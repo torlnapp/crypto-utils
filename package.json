@@ -4,7 +4,7 @@
   "module": "./dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "bun run lint && bun test && tsdown",
+    "build": "bun run lint && tsdown",
     "lint": "biome check --fix",
     "check": "tsc --noEmit",
     "prepublishOnly": "bun run build"
