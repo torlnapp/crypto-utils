@@ -1,42 +1,21 @@
 import type { DerivationProvider } from '../models/provider.model';
 import type { AESKey, HKDFKey } from '../types/key';
+import { generateNonce } from '../utils/crypto';
 import { encodeUTF8 } from '../utils/encode';
-import {
-  asSymmetricKey,
-  exportKeyToJWK,
-  exportKeyToRaw,
-  importKey,
-} from '../utils/key';
+import { asSymmetricKey } from '../utils/key';
 
 export const HKDF: DerivationProvider<HKDFKey> = {
-  async generateKey(extractable = false) {
-    const seed = globalThis.crypto.getRandomValues(new Uint8Array(32));
+  async generateKey() {
+    const seed = generateNonce(32);
     const key = await globalThis.crypto.subtle.importKey(
       'raw',
       seed,
       { name: 'HKDF' },
-      extractable,
+      false,
       ['deriveKey', 'deriveBits'],
     );
 
     return asSymmetricKey<HKDFKey>(key);
-  },
-
-  async importKey(keyData, extractable = false) {
-    return importKey<HKDFKey>(
-      keyData,
-      'HKDF',
-      ['deriveKey', 'deriveBits'],
-      extractable,
-    );
-  },
-
-  exportKeyToJWK(key) {
-    return exportKeyToJWK(key);
-  },
-
-  exportKeyToRaw(key) {
-    return exportKeyToRaw(key);
   },
 
   async deriveKey(key, salt, info, extractable = false) {

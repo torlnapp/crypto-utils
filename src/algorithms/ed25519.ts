@@ -47,7 +47,7 @@ export const Ed25519: SignatureProvider<Ed25519PublicKey, Ed25519PrivateKey> = {
     return exportKeyToRaw(key);
   },
 
-  async sign(data, privateKey) {
+  async sign(privateKey, data) {
     const signature = await globalThis.crypto.subtle.sign(
       { name: 'Ed25519' },
       privateKey,
@@ -56,7 +56,7 @@ export const Ed25519: SignatureProvider<Ed25519PublicKey, Ed25519PrivateKey> = {
     return new Uint8Array(signature);
   },
 
-  async verify(data, signature, publicKey) {
+  async verify(publicKey, data, signature) {
     const isValid = await globalThis.crypto.subtle.verify(
       { name: 'Ed25519' },
       publicKey,

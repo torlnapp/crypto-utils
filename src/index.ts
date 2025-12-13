@@ -4,6 +4,7 @@ export * from './algorithms/hkdf';
 export * from './algorithms/sha256';
 export * from './algorithms/x25519';
 
+export * from './types/array';
 export * from './types/key';
 
 export * from './utils/binary';

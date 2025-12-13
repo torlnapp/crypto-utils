@@ -35,8 +35,7 @@ export const AES: SymmetricCryptoProvider<AESKey> = {
     return exportKeyToRaw(key);
   },
 
-  async encrypt(data, key) {
-    const iv = generateNonce();
+  async encrypt(key, data, iv = generateNonce()) {
     const encrypted = await globalThis.crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       key,
@@ -49,8 +48,7 @@ export const AES: SymmetricCryptoProvider<AESKey> = {
     return result;
   },
 
-  async decrypt(data, key) {
-    const iv = data.slice(0, 12);
+  async decrypt(key, data, iv = data.slice(0, 12)) {
     const encryptedData = data.slice(12);
     const decrypted = await globalThis.crypto.subtle.decrypt(
       { name: 'AES-GCM', iv },

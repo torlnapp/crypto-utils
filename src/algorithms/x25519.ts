@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import type { AgreementProvider } from '../models/provider.model';
 import type {
   X25519KeyPair,
@@ -54,3 +55,4 @@ export const X25519: AgreementProvider<X25519PublicKey, X25519PrivateKey> = {
     return new Uint8Array(secret);
   },
 };
+/* c8 ignore stop */

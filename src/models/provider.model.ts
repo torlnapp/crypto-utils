@@ -26,8 +26,8 @@ export interface SymmetricCryptoProvider<K extends AESKey = AESKey>
   extends Extractable<K> {
   generateKey: GenerateKey<K>;
   importKey: ImportKey<K>;
-  encrypt(data: Binary, key: K): Promise<Binary>;
-  decrypt(data: Binary, key: K): Promise<Binary>;
+  encrypt(key: K, data: Binary, iv?: Binary): Promise<Binary>;
+  decrypt(key: K, data: Binary, iv?: Binary): Promise<Binary>;
 }
 
 export interface SignatureProvider<
@@ -37,8 +37,8 @@ export interface SignatureProvider<
   generateKeyPair: GenerateKey<KeyPair<P, S>>;
   importPublicKey: ImportKey<P>;
   importPrivateKey: ImportKey<S>;
-  sign(data: Binary, privateKey: S): Promise<Binary>;
-  verify(data: Binary, signature: Binary, publicKey: P): Promise<boolean>;
+  sign(privateKey: S, data: Binary): Promise<Binary>;
+  verify(publicKey: P, data: Binary, signature: Binary): Promise<boolean>;
 }
 
 export interface HashProvider {
@@ -55,9 +55,8 @@ export interface AgreementProvider<
   deriveSecret(privateKey: S, publicKey: P): Promise<Binary>;
 }
 
-export interface DerivationProvider<K extends HKDFKey> extends Extractable<K> {
-  generateKey: GenerateKey<K>;
-  importKey: ImportKey<K>;
+export interface DerivationProvider<K extends HKDFKey> {
+  generateKey: () => Promise<K>;
   deriveKey(
     key: K,
     salt: Binary | string,

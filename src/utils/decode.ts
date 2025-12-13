@@ -1,5 +1,6 @@
 import { decode } from '@msgpack/msgpack';
 import type { Binary } from '../types/array';
+import { toTightUint8Arrays } from './binary';
 
 export function decodeBase64(data: Binary): string {
   if (!('atob' in globalThis)) {
@@ -14,7 +15,7 @@ export function decodeBase64(data: Binary): string {
 }
 
 export function decodeMsgPack(data: Binary): unknown {
-  return decode(data);
+  return toTightUint8Arrays(decode(data));
 }
 
 export function decodeUtf8(data: Binary): string {

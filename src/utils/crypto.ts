@@ -1,8 +1,12 @@
 import type { Binary } from '../types/array';
 import type { Algorithm } from '../types/key';
 
-export function generateNonce(): Binary {
-  const nonce = new Uint8Array(12);
+export function generateUUID(): string {
+  return globalThis.crypto.randomUUID();
+}
+
+export function generateNonce(length: number = 12): Binary {
+  const nonce = new Uint8Array(length);
   globalThis.crypto.getRandomValues(nonce);
 
   return nonce;
