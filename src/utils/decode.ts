@@ -14,7 +14,7 @@ export function decodeBase64(data: Binary): string {
   return globalThis.atob(binary);
 }
 
-export function decodeMsgPack<T extends object>(data: Binary): T {
+export function decodeMsgPack<T = unknown>(data: Binary): T {
   return toTightUint8Arrays(decode(data)) as T;
 }
 

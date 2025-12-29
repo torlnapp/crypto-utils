@@ -29,7 +29,7 @@ import {
   X25519,
 } from '../src/index.ts';
 
-const toHex = (data: Uint8Array) =>
+const toHex = (data: Uint8Array): string =>
   Array.from(data, (b) => b.toString(16).padStart(2, '0')).join('');
 
 describe('encoding utilities', () => {

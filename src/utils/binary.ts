@@ -23,7 +23,7 @@ export function isBinary(data: unknown): data is Binary {
   return data instanceof Uint8Array || data instanceof ArrayBuffer;
 }
 
-export function toTightUint8Arrays(data: unknown) {
+export function toTightUint8Arrays(data: unknown): unknown {
   if (!data || !isProcessableObject(data)) {
     return data;
   }
