@@ -13,7 +13,7 @@ export function encodeBase64(data: Binary): string {
   return globalThis.btoa(binary);
 }
 
-export function encodeMsgPack(data: unknown): Binary {
+export function encodeMsgPack<T extends object>(data: T): Binary {
   const encodedData = new Uint8Array(encode(data));
   return encodedData;
 }

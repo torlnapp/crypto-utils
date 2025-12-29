@@ -9,7 +9,7 @@ import {
   cm,
   decodeBase64,
   decodeMsgPack,
-  decodeUtf8,
+  decodeUTF8,
   Ed25519,
   encodeBase64,
   encodeMsgPack,
@@ -177,7 +177,7 @@ describe('algorithms', () => {
     const encrypted = await AES.encrypt(key, plaintext);
     const decrypted = await AES.decrypt(key, encrypted);
 
-    expect(decodeUtf8(decrypted)).toBe('secret message');
+    expect(decodeUTF8(decrypted)).toBe('secret message');
   });
 
   test('AES export/import raw and JWK', async () => {
@@ -191,7 +191,7 @@ describe('algorithms', () => {
     const plaintext = encodeUTF8('roundtrip');
     const cipher = await AES.encrypt(fromRaw, plaintext);
     const decoded = await AES.decrypt(fromJwk, cipher);
-    expect(decodeUtf8(decoded)).toBe('roundtrip');
+    expect(decodeUTF8(decoded)).toBe('roundtrip');
   });
 
   test('HKDF derived keys are consistent', async () => {
@@ -206,7 +206,7 @@ describe('algorithms', () => {
     const encrypted = await AES.encrypt(derivedA, payload);
     const decrypted = await AES.decrypt(derivedB, encrypted);
 
-    expect(decodeUtf8(decrypted)).toBe('derived data');
+    expect(decodeUTF8(decrypted)).toBe('derived data');
 
     const bits = await HKDF.deriveBits(seedKey, salt, info);
     expect(bits).toHaveLength(32);
@@ -224,7 +224,7 @@ describe('algorithms', () => {
     const cipher = await AES.encrypt(aesKey, plaintext);
     const decrypted = await AES.decrypt(aesKey, cipher);
 
-    expect(decodeUtf8(decrypted)).toBe('raw-import');
+    expect(decodeUTF8(decrypted)).toBe('raw-import');
 
     const bits = await HKDF.deriveBits(key, salt, info);
     expect(bits).toHaveLength(32);

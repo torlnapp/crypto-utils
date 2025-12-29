@@ -14,11 +14,11 @@ export function decodeBase64(data: Binary): string {
   return globalThis.atob(binary);
 }
 
-export function decodeMsgPack(data: Binary): unknown {
-  return toTightUint8Arrays(decode(data));
+export function decodeMsgPack<T extends object>(data: Binary): T {
+  return toTightUint8Arrays(decode(data)) as T;
 }
 
-export function decodeUtf8(data: Binary): string {
+export function decodeUTF8(data: Binary): string {
   const decoder = new TextDecoder();
   return decoder.decode(data);
 }
